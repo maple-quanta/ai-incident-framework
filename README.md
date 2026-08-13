@@ -119,3 +119,6 @@ Incident records may contain highly sensitive security, personal, contractual, a
 
 Every record declares the framework name and semantic version. MQ-AICIR 1.0 rejects records claiming another framework version instead of silently reinterpreting them. Future migrations belong in `mqaicir.migrations` and must produce a new validated record with an auditable migration note. See `docs/implementation-guide.md`.
 
+## License
+
+Licensed under the [Apache License 2.0](LICENSE). The license does not grant permission to use Maple Quanta Inc. trade names, trademarks, service marks, or product names except as allowed by the license.

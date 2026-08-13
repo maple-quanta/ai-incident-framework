@@ -8,7 +8,8 @@ version = "1.0.0"
 description = "Maple Quanta AI Incident Classification & Reporting Framework"
 readme = "README.md"
 requires-python = ">=3.12"
-license = { text = "Proprietary - see repository terms" }
+license = "Apache-2.0"
+license-files = ["LICENSE"]
 authors = [{ name = "Maple Quanta Inc." }]
 dependencies = [
   "jinja2>=3.1,<4",
@@ -41,4 +42,3 @@ testpaths = ["tests"]
 [tool.coverage.run]
 source = ["mqaicir"]
 branch = true
-
