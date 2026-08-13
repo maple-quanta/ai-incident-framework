@@ -1,0 +1,15 @@
+{
+  "framework": "Shared AI Findings Exchange (SAFE)",
+  "status": "draft / RFC / evolving",
+  "source_version": "RFC proposal; no stable version",
+  "verified_at": "2026-08-12",
+  "source": "https://github.com/OpenSecureAIAlliance/RFCs/blob/main/rfc-safe-proposal.md",
+  "entries": [
+    {"key": "incident_near_miss", "identifier": null, "title": "Reporting Compact", "relationship": "MQ-AICIR event states distinguish hazards, near misses, boundary violations, incidents, and serious/systemic incidents for incident-learning workflows."},
+    {"key": "evidence", "identifier": null, "title": "Evidence Preservation", "relationship": "MQ-AICIR evidence, timeline, identity, control, and containment records support the proposed preservation scope."},
+    {"key": "operating_stack", "identifier": null, "title": "Review Framework", "relationship": "MQ-AICIR root causes, boundaries, authority, control performance, and observability can record failures across the proposed operating stack."},
+    {"key": "notification", "identifier": null, "title": "Notification Timelines", "relationship": "MQ-AICIR records notification assessments but does not calculate a SAFE, contractual, or legal deadline."},
+    {"key": "corrective_actions", "identifier": null, "title": "From Lessons to Controls", "relationship": "MQ-AICIR findings, corrective actions, owners, verification evidence, and revalidation support incident-driven improvement."}
+  ]
+}
+

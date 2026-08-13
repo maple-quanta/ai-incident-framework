@@ -1,0 +1,153 @@
+# AI Incident Report — {{ incident.incident_id }}
+
+> **Handling: {{ incident.handling.classification }}**  
+> Distribution: {{ incident.handling.distribution | join(', ') if incident.handling.distribution else 'Not specified' }}
+
+Framework: Maple Quanta AI Incident Classification & Reporting Framework (MQ-AICIR) {{ incident.framework.version }}
+
+## Executive Summary
+
+**{{ incident.title }}**
+
+{{ incident.executive_summary or incident.description or 'No executive summary recorded.' }}
+
+Severity: **{{ severity.severity }}** — {{ severity.rationale | join(' ') }}
+
+## Incident Classification
+
+Incident Profile: `{{ vector }}`
+
+- Event state: **{{ incident.event_state }} — {{ label(incident.event_state) }}**
+- Authority exercised: **{{ incident.authority.actually_exercised | join(', ') if incident.authority.actually_exercised else 'None recorded' }}**
+- Boundaries crossed: **{{ boundary_labels | join('; ') }}**
+- Assets: **{{ incident.assets_affected | map(attribute='type') | join(', ') if incident.assets_affected else 'None recorded' }}**
+- Harm: **{{ incident.harm.realized_level }} — {{ label(incident.harm.realized_level) }}**; potential **{{ incident.harm.potential_level }} — {{ label(incident.harm.potential_level) }}**
+- Reversibility: **{{ incident.reversibility }} — {{ label(incident.reversibility) }}**
+- Observability: **{{ incident.observability.level }} — {{ label(incident.observability.level) }}** (higher O-number means worse observability)
+- Blast radius: **{{ incident.blast_radius }} — {{ label(incident.blast_radius) }}**
+- Lifecycle: **{{ incident.lifecycle_status }}**
+
+Triggered rules: {{ severity.triggered_rules | join(', ') }}
+
+{% for rationale in severity.rationale %}- {{ rationale }}
+{% endfor %}
+
+## AI System Information
+
+- System/model: {{ incident.system.name }}{% if incident.system.model %} / {{ incident.system.model }}{% endif %}
+- Model version: {{ incident.system.model_version or 'Not recorded' }}
+- Provider: {{ incident.system.provider or 'Not recorded' }}
+- Environment: {{ incident.system.deployment_environment or 'Not recorded' }}
+- Assurance boundary: {{ incident.system.assurance_boundary or 'Not recorded' }}
+- MCAI before/after: {{ incident.mcai.pre_incident_assessed or 'N/A' }} / {{ incident.mcai.post_incident_reassessed or 'N/A' }}
+
+## Event Timeline
+
+| Timestamp | Type | Actor | Description | Evidence |
+|---|---|---|---|---|
+{% for event in incident.timeline %}| {{ event.timestamp }} | {{ event.event_type }} | {{ event.actor }} | {{ event.description | replace('|', '\\|') }} | {{ event.evidence_refs | join(', ') }} |
+{% else %}| — | — | — | No timeline events recorded. | — |
+{% endfor %}
+
+## Authority Exercised
+
+- Authorized: {{ incident.authority.authorized | join(', ') if incident.authority.authorized else 'None' }}
+- Actually exercised: {{ incident.authority.actually_exercised | join(', ') if incident.authority.actually_exercised else 'None' }}
+- **Unauthorized exercised: {{ incident.authority.unauthorized_exercised | join(', ') if incident.authority.unauthorized_exercised else 'None' }}**
+
+The difference between authorized and actually exercised authority is shown explicitly above and is not inferred from harm.
+
+## Boundary Analysis
+
+{% for boundary in boundary_labels %}- {{ boundary }}
+{% endfor %}
+
+## Assets Affected
+
+{% for asset in incident.assets_affected %}- **{{ asset.type }} — {{ asset.name }}** ({{ asset.criticality }}): {{ asset.description or 'No description.' }} Owner: {{ asset.owner or 'Not recorded' }}
+{% else %}No affected assets recorded.
+{% endfor %}
+
+## Harm Assessment
+
+- Realized: {{ incident.harm.realized_level }} — {{ label(incident.harm.realized_level) }}
+- Potential: {{ incident.harm.potential_level }} — {{ label(incident.harm.potential_level) }}
+- Categories: {{ incident.harm.categories | join(', ') if incident.harm.categories else 'None' }}
+- Description: {{ incident.harm.description or 'Not recorded' }}
+
+## Reversibility
+
+{{ incident.reversibility }} — {{ label(incident.reversibility) }}
+
+## Observability
+
+{{ incident.observability.level }} — {{ label(incident.observability.level) }}. A larger O-number represents **worse** observability.
+
+- Evidence sources: {{ incident.observability.evidence_sources | join(', ') if incident.observability.evidence_sources else 'None' }}
+- Missing evidence: {{ incident.observability.missing_evidence | join(', ') if incident.observability.missing_evidence else 'None identified' }}
+- Tamper risk: {{ incident.observability.tamper_risk }}
+
+## Intervention & Containment
+
+- Detection: {{ incident.containment.detection_time_seconds if incident.containment.detection_time_seconds is not none else 'N/A' }} seconds
+- Decision: {{ incident.containment.decision_time_seconds if incident.containment.decision_time_seconds is not none else 'N/A' }} seconds
+- Enforcement: {{ incident.containment.enforcement_time_seconds if incident.containment.enforcement_time_seconds is not none else 'N/A' }} seconds
+- Intervention Time: {{ incident.containment.intervention_time_seconds if incident.containment.intervention_time_seconds is not none else 'N/A' }} seconds
+- Damage Time: {{ incident.containment.damage_time_seconds if incident.containment.damage_time_seconds is not none else 'N/A' }} seconds
+- Containment Margin: {{ '%.2f' | format(incident.containment.containment_margin) if incident.containment.containment_margin is not none else 'N/A — ' ~ incident.containment.not_applicable_reason }}
+- Interpretation: {{ containment_interpretation }}
+- Documentation: {{ incident.containment.documentation or 'Not recorded' }}
+- Preventive control: {{ incident.containment.preventive_control or 'Not recorded' }}
+
+## Root Cause
+
+{% if incident.root_cause %}- Primary: {{ incident.root_cause.primary_root_cause }}
+- Contributing: {{ incident.root_cause.contributing_factors | join(', ') if incident.root_cause.contributing_factors else 'None recorded' }}
+- Analysis: {{ incident.root_cause.analysis or 'Not recorded' }}
+{% else %}Root cause has not yet been recorded.
+{% endif %}
+
+## Control Performance
+
+{% for control in incident.control_performance %}- **{{ control.control_id }} — {{ control.control_name }}**: {{ control.status }}
+  - Expected: {{ control.expected_behavior }}
+  - Observed: {{ control.observed_behavior }}
+  - Evidence: {{ control.evidence | join(', ') if control.evidence else 'None referenced' }}
+{% else %}No control-performance records.
+{% endfor %}
+
+## Evidence
+
+{% for item in incident.evidence %}- **{{ item.id }} — {{ item.type }}**: {{ item.description }} Location: {{ item.location }}{% if item.hash %}; digest: {{ item.hash }}{% endif %}{% if item.redacted %}; redacted reference{% endif %}
+{% else %}No evidence references recorded. Do not embed secrets in this record.
+{% endfor %}
+
+## Notifications
+
+- Internal teams: {{ incident.notifications.affected_internal_teams | join(', ') if incident.notifications.affected_internal_teams else 'None recorded' }}
+- Affected third parties: {{ incident.notifications.affected_third_parties | join(', ') if incident.notifications.affected_third_parties else 'None recorded' }}
+- Contractual notification: {{ incident.notifications.contractual_notification_required }}
+- Regulatory notification: {{ incident.notifications.regulatory_notification_required }}
+- Legal review required: {{ incident.notifications.legal_review_required }}
+
+> {{ legal_notice }}
+
+## Corrective Actions
+
+{% for action in incident.corrective_actions %}- **{{ action.action_id }} [{{ action.priority }} / {{ action.status }}]** — {{ action.recommended_action }}
+  - Finding: {{ action.finding }}
+  - Owner: {{ action.owner or 'Unassigned' }}; due: {{ action.due_date or 'Not set' }}
+  - Verification required: {{ action.verification_required }}; evidence: {{ action.verification_evidence | join(', ') if action.verification_evidence else 'None' }}
+{% else %}No corrective actions recorded.
+{% endfor %}
+
+## Revalidation
+
+{{ incident.revalidation or 'Not yet recorded.' }}
+
+## Closure
+
+{{ incident.closure_rationale or 'Incident is not closed or no closure rationale has been recorded.' }}
+
+{% if incident.lifecycle_override %}Exception override by {{ incident.lifecycle_override.responsible_person }} at {{ incident.lifecycle_override.timestamp }}: {{ incident.lifecycle_override.rationale }}{% endif %}
+

@@ -1,0 +1,18 @@
+{
+  "framework": "NIST incident response and AI risk management",
+  "status": "informative crosswalk",
+  "source_version": "SP 800-61 Rev. 3 (April 2025); AI RMF 1.0 (January 2023)",
+  "verified_at": "2026-08-12",
+  "sources": [
+    "https://csrc.nist.gov/pubs/sp/800/61/r3/final",
+    "https://www.nist.gov/itl/ai-risk-management-framework"
+  ],
+  "entries": [
+    {"key": "govern", "identifier": "AI RMF GOVERN", "title": "GOVERN", "relationship": "Lifecycle accountability, handling, notifications, and ownership provide inputs to governance; no compliance claim."},
+    {"key": "map", "identifier": "AI RMF MAP", "title": "MAP", "relationship": "System context, assets, boundaries, affected parties, and harm help contextualize AI risk."},
+    {"key": "measure", "identifier": "AI RMF MEASURE", "title": "MEASURE", "relationship": "Evidence, observability, Intervention Time, Damage Time, and control performance support measurement."},
+    {"key": "manage", "identifier": "AI RMF MANAGE", "title": "MANAGE", "relationship": "Containment, severity escalation, corrective action, and revalidation support risk treatment."},
+    {"key": "incident_response", "identifier": "NIST SP 800-61 Rev. 3 / CSF 2.0 Community Profile", "title": "Cybersecurity incident response", "relationship": "MQ-AICIR timeline, detection, response, containment, recovery, and lessons-learned records can support the community profile; exact organizational outcomes must be assessed separately."}
+  ]
+}
+

@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mq-aicir"
+version = "1.0.0"
+description = "Maple Quanta AI Incident Classification & Reporting Framework"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "Proprietary - see repository terms" }
+authors = [{ name = "Maple Quanta Inc." }]
+dependencies = [
+  "jinja2>=3.1,<4",
+  "pydantic>=2.8,<3",
+  "pyyaml>=6.0,<7",
+  "typer>=0.12,<1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "jsonschema>=4.23,<5",
+  "pytest>=8.3,<9",
+  "pytest-cov>=5,<7",
+]
+
+[project.scripts]
+mq-aicir = "mqaicir.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mqaicir"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"config/severity_rules.yaml" = "mqaicir/data/severity_rules.yaml"
+"config/crosswalks" = "mqaicir/data/crosswalks"
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["mqaicir"]
+branch = true
+

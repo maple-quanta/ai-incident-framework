@@ -1,0 +1,15 @@
+{
+  "framework": "MITRE ATLAS",
+  "status": "living knowledge base",
+  "source_version": "Content v2026.07",
+  "verified_at": "2026-08-12",
+  "source": "https://github.com/mitre-atlas/atlas-data/releases/tag/v2026.07",
+  "entries": [
+    {"key": "prompt_injection", "identifier": "AML.T0051", "title": "LLM Prompt Injection", "relationship": "Attack mechanism mapping; it does not determine MQ-AICIR event state or severity."},
+    {"key": "indirect_prompt_injection", "identifier": "AML.T0051.001", "title": "LLM Prompt Injection: Indirect", "relationship": "Attack mechanism mapping for instructions delivered through external or retrieved content."},
+    {"key": "tool_invocation", "identifier": "AML.T0053", "title": "AI Agent Tool Invocation", "relationship": "Technique may describe agent action through tools; authority and authorization remain separate MQ-AICIR dimensions."},
+    {"key": "tool_injection", "identifier": "AML.T0110", "title": "AI Agent Tool Poisoning", "relationship": "Attack mechanism mapping for poisoned tool definitions, implementation, or runtime responses."},
+    {"key": "exfiltration", "identifier": "AML.T0086", "title": "Exfiltration via AI Agent Tool Invocation", "relationship": "Mechanism mapping when an agent tool mediates exfiltration; confirmed harm must be recorded separately."}
+  ]
+}
+

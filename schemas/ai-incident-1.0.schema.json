@@ -1,0 +1,1556 @@
+{
+  "$defs": {
+    "AISystemInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model"
+        },
+        "model_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model Version"
+        },
+        "provider": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider"
+        },
+        "owner": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Owner"
+        },
+        "deployment_environment": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Deployment Environment"
+        },
+        "assurance_boundary": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Assurance Boundary"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "AISystemInfo",
+      "type": "object"
+    },
+    "AffectedAsset": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/AssetType"
+        },
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "owner": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Owner"
+        },
+        "criticality": {
+          "$ref": "#/$defs/AssetCriticality",
+          "default": "medium"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "name"
+      ],
+      "title": "AffectedAsset",
+      "type": "object"
+    },
+    "AssetCriticality": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "title": "AssetCriticality",
+      "type": "string"
+    },
+    "AssetType": {
+      "enum": [
+        "DATA",
+        "IDENTITY",
+        "MODEL",
+        "TOOL",
+        "CODE",
+        "INFRASTRUCTURE",
+        "FINANCIAL",
+        "OPERATIONS",
+        "HUMAN",
+        "RIGHTS",
+        "PHYSICAL",
+        "CRITICAL_INFRASTRUCTURE",
+        "THIRD_PARTY"
+      ],
+      "title": "AssetType",
+      "type": "string",
+      "description": "Category of asset affected by the AI event."
+    },
+    "AuthorityAssessment": {
+      "additionalProperties": false,
+      "properties": {
+        "authorized": {
+          "items": {
+            "$ref": "#/$defs/AuthorityClass"
+          },
+          "title": "Authorized",
+          "type": "array"
+        },
+        "actually_exercised": {
+          "items": {
+            "$ref": "#/$defs/AuthorityClass"
+          },
+          "title": "Actually Exercised",
+          "type": "array"
+        },
+        "unauthorized_exercised": {
+          "items": {
+            "$ref": "#/$defs/AuthorityClass"
+          },
+          "title": "Unauthorized Exercised",
+          "type": "array"
+        }
+      },
+      "title": "AuthorityAssessment",
+      "type": "object"
+    },
+    "AuthorityClass": {
+      "enum": [
+        "READ",
+        "RECOMMEND",
+        "WRITE",
+        "EXECUTE",
+        "EXTERNALIZE",
+        "AUTHORIZE"
+      ],
+      "title": "AuthorityClass",
+      "type": "string",
+      "description": "READ, RECOMMEND, WRITE, EXECUTE, EXTERNALIZE, or AUTHORIZE authority class from Maple Quanta Agentic AI Containment Assurance."
+    },
+    "BlastRadius": {
+      "enum": [
+        "BR0",
+        "BR1",
+        "BR2",
+        "BR3",
+        "BR4",
+        "BR5"
+      ],
+      "title": "BlastRadius",
+      "type": "string",
+      "description": "BR0 Single action/session through BR5 Potentially systemic."
+    },
+    "BoundaryType": {
+      "enum": [
+        "none",
+        "instruction_policy",
+        "data",
+        "tool",
+        "credential",
+        "privilege",
+        "network",
+        "tenant",
+        "evaluation_real_world",
+        "third_party"
+      ],
+      "title": "BoundaryType",
+      "type": "string",
+      "description": "Machine identifiers for B0 None through B9 Third Party / External. See the MQ-AICIR taxonomy for code labels."
+    },
+    "ClassificationIndicator": {
+      "description": "Analyst-attested facts used by transparent severity rules.",
+      "enum": [
+        "destructive_action",
+        "cross_tenant_compromise",
+        "autonomous_offensive_cyber",
+        "credential_propagation",
+        "broad_privileged_access",
+        "persistent_unauthorized_access",
+        "sensitive_data_exposure",
+        "production_impact",
+        "approval_bypass",
+        "external_action",
+        "critical_action",
+        "preventive_control_absent",
+        "third_party_impact"
+      ],
+      "title": "ClassificationIndicator",
+      "type": "string"
+    },
+    "ContainmentMetrics": {
+      "additionalProperties": false,
+      "properties": {
+        "detection_time_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Detection Time Seconds"
+        },
+        "decision_time_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Decision Time Seconds"
+        },
+        "enforcement_time_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Enforcement Time Seconds"
+        },
+        "intervention_time_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Intervention Time Seconds"
+        },
+        "damage_time_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Damage Time Seconds"
+        },
+        "containment_margin": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Containment Margin"
+        },
+        "metric_misleading": {
+          "default": false,
+          "title": "Metric Misleading",
+          "type": "boolean"
+        },
+        "instantaneous_action": {
+          "default": false,
+          "title": "Instantaneous Action",
+          "type": "boolean"
+        },
+        "not_applicable_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Not Applicable Reason"
+        },
+        "documentation": {
+          "default": "",
+          "title": "Documentation",
+          "type": "string"
+        },
+        "preventive_control": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Preventive Control"
+        }
+      },
+      "title": "ContainmentMetrics",
+      "type": "object"
+    },
+    "ControlPerformance": {
+      "additionalProperties": false,
+      "properties": {
+        "control_id": {
+          "minLength": 1,
+          "title": "Control Id",
+          "type": "string"
+        },
+        "control_name": {
+          "minLength": 1,
+          "title": "Control Name",
+          "type": "string"
+        },
+        "expected_behavior": {
+          "minLength": 1,
+          "title": "Expected Behavior",
+          "type": "string"
+        },
+        "observed_behavior": {
+          "minLength": 1,
+          "title": "Observed Behavior",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/ControlStatus"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "control_id",
+        "control_name",
+        "expected_behavior",
+        "observed_behavior",
+        "status"
+      ],
+      "title": "ControlPerformance",
+      "type": "object"
+    },
+    "ControlStatus": {
+      "enum": [
+        "effective",
+        "partially_effective",
+        "failed",
+        "not_tested",
+        "not_applicable",
+        "unknown"
+      ],
+      "title": "ControlStatus",
+      "type": "string"
+    },
+    "CorrectiveAction": {
+      "additionalProperties": false,
+      "properties": {
+        "action_id": {
+          "pattern": "^CA-[A-Z0-9-]+$",
+          "title": "Action Id",
+          "type": "string"
+        },
+        "finding": {
+          "minLength": 1,
+          "title": "Finding",
+          "type": "string"
+        },
+        "recommended_action": {
+          "minLength": 1,
+          "title": "Recommended Action",
+          "type": "string"
+        },
+        "priority": {
+          "$ref": "#/$defs/CorrectiveActionPriority"
+        },
+        "owner": {
+          "default": "",
+          "title": "Owner",
+          "type": "string"
+        },
+        "due_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Due Date"
+        },
+        "status": {
+          "$ref": "#/$defs/CorrectiveActionStatus",
+          "default": "open"
+        },
+        "verification_required": {
+          "default": true,
+          "title": "Verification Required",
+          "type": "boolean"
+        },
+        "verification_evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Verification Evidence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "action_id",
+        "finding",
+        "recommended_action",
+        "priority"
+      ],
+      "title": "CorrectiveAction",
+      "type": "object"
+    },
+    "CorrectiveActionPriority": {
+      "enum": [
+        "critical",
+        "high",
+        "medium",
+        "low"
+      ],
+      "title": "CorrectiveActionPriority",
+      "type": "string"
+    },
+    "CorrectiveActionStatus": {
+      "enum": [
+        "open",
+        "in_progress",
+        "complete",
+        "accepted_risk"
+      ],
+      "title": "CorrectiveActionStatus",
+      "type": "string"
+    },
+    "CrosswalkReference": {
+      "additionalProperties": false,
+      "properties": {
+        "identifier": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Identifier"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "relationship": {
+          "title": "Relationship",
+          "type": "string"
+        },
+        "source_version": {
+          "title": "Source Version",
+          "type": "string"
+        },
+        "verified_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Verified At"
+        }
+      },
+      "required": [
+        "title",
+        "relationship",
+        "source_version"
+      ],
+      "title": "CrosswalkReference",
+      "type": "object"
+    },
+    "Crosswalks": {
+      "additionalProperties": false,
+      "properties": {
+        "safe": {
+          "items": {
+            "$ref": "#/$defs/CrosswalkReference"
+          },
+          "title": "Safe",
+          "type": "array"
+        },
+        "mitre_atlas": {
+          "items": {
+            "$ref": "#/$defs/CrosswalkReference"
+          },
+          "title": "Mitre Atlas",
+          "type": "array"
+        },
+        "nist": {
+          "items": {
+            "$ref": "#/$defs/CrosswalkReference"
+          },
+          "title": "Nist",
+          "type": "array"
+        },
+        "oecd": {
+          "items": {
+            "$ref": "#/$defs/CrosswalkReference"
+          },
+          "title": "Oecd",
+          "type": "array"
+        }
+      },
+      "title": "Crosswalks",
+      "type": "object"
+    },
+    "CustodyEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "timestamp": {
+          "format": "date-time",
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "actor": {
+          "minLength": 1,
+          "title": "Actor",
+          "type": "string"
+        },
+        "action": {
+          "minLength": 1,
+          "title": "Action",
+          "type": "string"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        }
+      },
+      "required": [
+        "timestamp",
+        "actor",
+        "action"
+      ],
+      "title": "CustodyEvent",
+      "type": "object"
+    },
+    "EventState": {
+      "enum": [
+        "E0",
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "title": "EventState",
+      "type": "string",
+      "description": "E0 Hazard; E1 Near Miss; E2 Boundary Violation; E3 Incident; E4 Serious/Systemic Incident. E4 is not a jurisdiction-specific legal conclusion."
+    },
+    "Evidence": {
+      "additionalProperties": false,
+      "description": "A reference to preserved evidence; never embed credentials or secrets.",
+      "properties": {
+        "id": {
+          "pattern": "^EV-[A-Z0-9-]+$",
+          "title": "Id",
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/$defs/EvidenceType"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "location": {
+          "description": "Reference or controlled location, not the evidence secret itself.",
+          "title": "Location",
+          "type": "string"
+        },
+        "hash": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Optional digest including algorithm, e.g. sha256:...",
+          "title": "Hash"
+        },
+        "collected_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Collected At"
+        },
+        "collected_by": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Collected By"
+        },
+        "chain_of_custody": {
+          "items": {
+            "$ref": "#/$defs/CustodyEvent"
+          },
+          "title": "Chain Of Custody",
+          "type": "array"
+        },
+        "redacted": {
+          "default": false,
+          "title": "Redacted",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "description",
+        "location"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "EvidenceType": {
+      "enum": [
+        "agent_trace",
+        "prompt",
+        "system_prompt",
+        "tool_call",
+        "tool_response",
+        "network_log",
+        "iam_log",
+        "cloud_log",
+        "application_log",
+        "model_version",
+        "system_configuration",
+        "policy_version",
+        "credentials_available_to_agent",
+        "affected_file",
+        "screenshot",
+        "forensic_image",
+        "human_communication",
+        "incident_ticket",
+        "other"
+      ],
+      "title": "EvidenceType",
+      "type": "string"
+    },
+    "FrameworkInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "const": "Maple Quanta AI Incident Classification & Reporting Framework",
+          "default": "Maple Quanta AI Incident Classification & Reporting Framework",
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "default": "1.0.0",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "title": "FrameworkInfo",
+      "type": "object"
+    },
+    "Handling": {
+      "additionalProperties": false,
+      "properties": {
+        "classification": {
+          "$ref": "#/$defs/HandlingClassification",
+          "default": "CONFIDENTIAL"
+        },
+        "distribution": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Distribution",
+          "type": "array"
+        },
+        "retention_policy": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Retention Policy"
+        }
+      },
+      "title": "Handling",
+      "type": "object"
+    },
+    "HandlingClassification": {
+      "enum": [
+        "PUBLIC",
+        "INTERNAL",
+        "CONFIDENTIAL",
+        "RESTRICTED"
+      ],
+      "title": "HandlingClassification",
+      "type": "string",
+      "description": "Incident-level information handling marking."
+    },
+    "HarmAssessment": {
+      "additionalProperties": false,
+      "properties": {
+        "realized_level": {
+          "$ref": "#/$defs/HarmLevel"
+        },
+        "potential_level": {
+          "$ref": "#/$defs/HarmLevel"
+        },
+        "categories": {
+          "items": {
+            "$ref": "#/$defs/HarmCategory"
+          },
+          "title": "Categories",
+          "type": "array"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        }
+      },
+      "required": [
+        "realized_level",
+        "potential_level"
+      ],
+      "title": "HarmAssessment",
+      "type": "object"
+    },
+    "HarmCategory": {
+      "enum": [
+        "confidentiality",
+        "integrity",
+        "availability",
+        "financial",
+        "privacy",
+        "legal",
+        "reputational",
+        "human_safety",
+        "fundamental_rights",
+        "environmental",
+        "critical_infrastructure",
+        "third_party"
+      ],
+      "title": "HarmCategory",
+      "type": "string"
+    },
+    "HarmLevel": {
+      "enum": [
+        "H0",
+        "H1",
+        "H2",
+        "H3",
+        "H4"
+      ],
+      "title": "HarmLevel",
+      "type": "string",
+      "description": "H0 No Realized Harm; H1 Negligible; H2 Material; H3 Major; H4 Severe/Systemic."
+    },
+    "LifecycleOverride": {
+      "additionalProperties": false,
+      "properties": {
+        "responsible_person": {
+          "minLength": 1,
+          "title": "Responsible Person",
+          "type": "string"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "rationale": {
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        }
+      },
+      "required": [
+        "responsible_person",
+        "timestamp",
+        "rationale"
+      ],
+      "title": "LifecycleOverride",
+      "type": "object"
+    },
+    "LifecycleState": {
+      "enum": [
+        "DRAFT",
+        "TRIAGE",
+        "ACTIVE",
+        "CONTAINED",
+        "INVESTIGATION",
+        "REMEDIATION",
+        "REVALIDATION",
+        "CLOSED"
+      ],
+      "title": "LifecycleState",
+      "type": "string",
+      "description": "DRAFT, TRIAGE, ACTIVE, CONTAINED, INVESTIGATION, REMEDIATION, REVALIDATION, or CLOSED."
+    },
+    "MCAIAssessment": {
+      "additionalProperties": false,
+      "properties": {
+        "pre_incident_assessed": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MCAILevel"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "post_incident_reassessed": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MCAILevel"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "MCAIAssessment",
+      "type": "object"
+    },
+    "MCAILevel": {
+      "enum": [
+        "A0",
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "title": "MCAILevel",
+      "type": "string",
+      "description": "Maple Quanta Maximum Credible Agent Impact: A0 Informational through A4 Critical."
+    },
+    "NotificationDecision": {
+      "enum": [
+        "yes",
+        "no",
+        "pending"
+      ],
+      "title": "NotificationDecision",
+      "type": "string"
+    },
+    "Notifications": {
+      "additionalProperties": false,
+      "properties": {
+        "affected_internal_teams": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Affected Internal Teams",
+          "type": "array"
+        },
+        "affected_third_parties": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Affected Third Parties",
+          "type": "array"
+        },
+        "regulators": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Regulators",
+          "type": "array"
+        },
+        "law_enforcement": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Law Enforcement",
+          "type": "array"
+        },
+        "contractual_notification_required": {
+          "$ref": "#/$defs/NotificationDecision",
+          "default": "pending"
+        },
+        "regulatory_notification_required": {
+          "$ref": "#/$defs/NotificationDecision",
+          "default": "pending"
+        },
+        "legal_review_required": {
+          "default": true,
+          "title": "Legal Review Required",
+          "type": "boolean"
+        }
+      },
+      "title": "Notifications",
+      "type": "object"
+    },
+    "ObservabilityAssessment": {
+      "additionalProperties": false,
+      "properties": {
+        "level": {
+          "$ref": "#/$defs/ObservabilityLevel",
+          "description": "O0 is best and O4 is worst; unlike most dimensions, a larger number means poorer observability."
+        },
+        "evidence_sources": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Sources",
+          "type": "array"
+        },
+        "missing_evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Missing Evidence",
+          "type": "array"
+        },
+        "tamper_risk": {
+          "default": false,
+          "title": "Tamper Risk",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "level"
+      ],
+      "title": "ObservabilityAssessment",
+      "type": "object"
+    },
+    "ObservabilityLevel": {
+      "enum": [
+        "O0",
+        "O1",
+        "O2",
+        "O3",
+        "O4"
+      ],
+      "title": "ObservabilityLevel",
+      "type": "string",
+      "description": "O0 Fully reconstructed through O4 Unobservable. A larger number means worse observability."
+    },
+    "RegulatorySeriousIncident": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/RegulatoryStatus",
+          "default": "not_assessed"
+        },
+        "framework": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Framework"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        }
+      },
+      "title": "RegulatorySeriousIncident",
+      "type": "object"
+    },
+    "RegulatoryStatus": {
+      "enum": [
+        "yes",
+        "no",
+        "pending",
+        "not_assessed"
+      ],
+      "title": "RegulatoryStatus",
+      "type": "string"
+    },
+    "ReversibilityLevel": {
+      "enum": [
+        "R0",
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ],
+      "title": "ReversibilityLevel",
+      "type": "string",
+      "description": "R0 No persistent consequence through R4 Irreversible."
+    },
+    "RootCauseAnalysis": {
+      "additionalProperties": false,
+      "properties": {
+        "primary_root_cause": {
+          "$ref": "#/$defs/RootCauseCategory"
+        },
+        "contributing_factors": {
+          "items": {
+            "$ref": "#/$defs/RootCauseCategory"
+          },
+          "title": "Contributing Factors",
+          "type": "array"
+        },
+        "analysis": {
+          "default": "",
+          "title": "Analysis",
+          "type": "string"
+        }
+      },
+      "required": [
+        "primary_root_cause"
+      ],
+      "title": "RootCauseAnalysis",
+      "type": "object"
+    },
+    "RootCauseCategory": {
+      "enum": [
+        "model_behavior",
+        "prompt_injection",
+        "indirect_prompt_injection",
+        "tool_injection",
+        "credential_exposure",
+        "excessive_privilege",
+        "network_misconfiguration",
+        "sandbox_failure",
+        "identity_failure",
+        "approval_bypass",
+        "logging_failure",
+        "monitoring_failure",
+        "human_error",
+        "unsafe_delegation",
+        "agent_to_agent_failure",
+        "supply_chain",
+        "model_configuration",
+        "orchestration_failure",
+        "data_poisoning",
+        "retrieval_poisoning",
+        "policy_failure",
+        "unknown",
+        "other"
+      ],
+      "title": "RootCauseCategory",
+      "type": "string",
+      "description": "Structured primary or contributing root-cause category."
+    },
+    "Severity": {
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL"
+      ],
+      "title": "Severity",
+      "type": "string",
+      "description": "Rule-based operational severity. Values are never derived by averaging dimensions."
+    },
+    "SeverityAssessment": {
+      "additionalProperties": false,
+      "properties": {
+        "severity": {
+          "$ref": "#/$defs/Severity"
+        },
+        "triggered_rules": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Triggered Rules",
+          "type": "array"
+        },
+        "rationale": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Rationale",
+          "type": "array"
+        },
+        "ruleset_version": {
+          "default": "1.0.0",
+          "title": "Ruleset Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "severity",
+        "triggered_rules",
+        "rationale"
+      ],
+      "title": "SeverityAssessment",
+      "type": "object"
+    },
+    "TimelineEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "timestamp": {
+          "format": "date-time",
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "event_type": {
+          "$ref": "#/$defs/TimelineEventType"
+        },
+        "actor": {
+          "minLength": 1,
+          "title": "Actor",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Refs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "timestamp",
+        "event_type",
+        "actor",
+        "description"
+      ],
+      "title": "TimelineEvent",
+      "type": "object"
+    },
+    "TimelineEventType": {
+      "enum": [
+        "initial_trigger",
+        "model_action",
+        "tool_call",
+        "human_action",
+        "detection",
+        "alert",
+        "containment",
+        "credential_revocation",
+        "network_isolation",
+        "shutdown",
+        "notification",
+        "recovery",
+        "retest",
+        "closure",
+        "other"
+      ],
+      "title": "TimelineEventType",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "MQ-AICIR 1.0 incident, hazard, near-miss, or boundary-violation record. The $id identifies the schema; it does not assert that the URL currently hosts this file.",
+  "properties": {
+    "framework": {
+      "$ref": "#/$defs/FrameworkInfo",
+      "description": "Framework identity and semantic version; consumers must not silently reinterpret other versions."
+    },
+    "incident_id": {
+      "pattern": "^MQ-\\d{4}-[A-Z0-9-]+$",
+      "title": "Incident Id",
+      "type": "string",
+      "description": "Organization-assigned identifier in MQ-YYYY-... form."
+    },
+    "title": {
+      "minLength": 1,
+      "title": "Title",
+      "type": "string"
+    },
+    "description": {
+      "default": "",
+      "title": "Description",
+      "type": "string"
+    },
+    "executive_summary": {
+      "default": "",
+      "title": "Executive Summary",
+      "type": "string"
+    },
+    "handling": {
+      "$ref": "#/$defs/Handling"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "occurred_at": {
+      "format": "date-time",
+      "title": "Occurred At",
+      "type": "string"
+    },
+    "discovered_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Discovered At"
+    },
+    "lifecycle_status": {
+      "$ref": "#/$defs/LifecycleState",
+      "default": "DRAFT"
+    },
+    "event_state": {
+      "$ref": "#/$defs/EventState",
+      "description": "Event State (E) in the incident vector."
+    },
+    "regulatory_serious_incident": {
+      "$ref": "#/$defs/RegulatorySeriousIncident"
+    },
+    "system": {
+      "$ref": "#/$defs/AISystemInfo"
+    },
+    "authority": {
+      "$ref": "#/$defs/AuthorityAssessment",
+      "description": "Authorized, actually exercised, and unauthorized exercised Authority (A)."
+    },
+    "boundaries_crossed": {
+      "items": {
+        "$ref": "#/$defs/BoundaryType"
+      },
+      "title": "Boundaries Crossed",
+      "type": "array",
+      "description": "One or more Boundary (B) identifiers; B0/none is exclusive."
+    },
+    "assets_affected": {
+      "items": {
+        "$ref": "#/$defs/AffectedAsset"
+      },
+      "title": "Assets Affected",
+      "type": "array",
+      "description": "Affected Assets (X), including owner and contextual criticality where known."
+    },
+    "harm": {
+      "$ref": "#/$defs/HarmAssessment",
+      "description": "Realized and credible potential Harm (H) are deliberately separate."
+    },
+    "reversibility": {
+      "$ref": "#/$defs/ReversibilityLevel",
+      "description": "Reversibility (R) of the consequence."
+    },
+    "observability": {
+      "$ref": "#/$defs/ObservabilityAssessment",
+      "description": "Observability (O); O0 is best and O4 is worst."
+    },
+    "containment": {
+      "$ref": "#/$defs/ContainmentMetrics",
+      "description": "Containment (C), including the Intervention Time components, Damage Time, and contextual Containment Margin."
+    },
+    "blast_radius": {
+      "$ref": "#/$defs/BlastRadius"
+    },
+    "mcai": {
+      "$ref": "#/$defs/MCAIAssessment"
+    },
+    "classification_indicators": {
+      "items": {
+        "$ref": "#/$defs/ClassificationIndicator"
+      },
+      "title": "Classification Indicators",
+      "type": "array"
+    },
+    "root_cause": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/RootCauseAnalysis"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "control_performance": {
+      "items": {
+        "$ref": "#/$defs/ControlPerformance"
+      },
+      "title": "Control Performance",
+      "type": "array"
+    },
+    "timeline": {
+      "items": {
+        "$ref": "#/$defs/TimelineEvent"
+      },
+      "title": "Timeline",
+      "type": "array"
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/Evidence"
+      },
+      "title": "Evidence",
+      "type": "array"
+    },
+    "notifications": {
+      "$ref": "#/$defs/Notifications"
+    },
+    "corrective_actions_required": {
+      "default": true,
+      "title": "Corrective Actions Required",
+      "type": "boolean"
+    },
+    "corrective_actions": {
+      "items": {
+        "$ref": "#/$defs/CorrectiveAction"
+      },
+      "title": "Corrective Actions",
+      "type": "array"
+    },
+    "revalidation": {
+      "default": "",
+      "title": "Revalidation",
+      "type": "string"
+    },
+    "closure_rationale": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Closure Rationale"
+    },
+    "lifecycle_override": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/LifecycleOverride"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "severity_result": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SeverityAssessment"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Deterministic result including every decisive rule identifier and rationale."
+    },
+    "crosswalks": {
+      "$ref": "#/$defs/Crosswalks"
+    },
+    "extensions": {
+      "additionalProperties": true,
+      "description": "Namespaced hook for organization-specific policy; public core does not interpret it.",
+      "title": "Extensions",
+      "type": "object"
+    }
+  },
+  "required": [
+    "incident_id",
+    "title",
+    "occurred_at",
+    "event_state",
+    "system",
+    "authority",
+    "boundaries_crossed",
+    "harm",
+    "reversibility",
+    "observability",
+    "blast_radius"
+  ],
+  "title": "Maple Quanta AI Incident Classification & Reporting Framework — Incident 1.0",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://maplequanta.ca/schemas/ai-incident/1.0",
+  "version": "1.0.0",
+  "examples": [
+    {
+      "framework": {
+        "name": "Maple Quanta AI Incident Classification & Reporting Framework",
+        "version": "1.0.0"
+      },
+      "incident_id": "MQ-2026-0042",
+      "title": "Example boundary violation",
+      "occurred_at": "2026-08-12T15:21:32Z",
+      "event_state": "E2",
+      "system": {
+        "name": "Example Agent"
+      },
+      "authority": {
+        "authorized": [
+          "READ"
+        ],
+        "actually_exercised": [
+          "READ",
+          "EXECUTE"
+        ],
+        "unauthorized_exercised": [
+          "EXECUTE"
+        ]
+      },
+      "boundaries_crossed": [
+        "tool"
+      ],
+      "harm": {
+        "realized_level": "H0",
+        "potential_level": "H3",
+        "categories": []
+      },
+      "reversibility": "R0",
+      "observability": {
+        "level": "O1"
+      },
+      "blast_radius": "BR0"
+    }
+  ]
+}

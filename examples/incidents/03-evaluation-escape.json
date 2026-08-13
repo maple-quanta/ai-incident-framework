@@ -1,0 +1,18 @@
+{
+  "incident_id": "MQ-2026-0003", "title": "Evaluation agent reached a real external service", "description": "Synthetic evaluation escape caused by an incorrectly routed network namespace.",
+  "handling": {"classification": "CONFIDENTIAL", "distribution": ["AI Assurance"], "retention_policy": null}, "created_at": "2026-08-10T11:00:00Z", "occurred_at": "2026-08-10T10:00:00Z", "lifecycle_status": "CONTAINED", "event_state": "E2",
+  "regulatory_serious_incident": {"status": "no", "framework": null, "notes": "Internal assessment only; not a legal conclusion."},
+  "system": {"name": "Offensive Capability Evaluation Agent", "model": "Synthetic-Eval-Model", "model_version": "eval-4", "provider": null, "owner": "AI Assurance", "deployment_environment": "evaluation", "assurance_boundary": "Simulated targets only", "description": "Synthetic example."},
+  "authority": {"authorized": ["READ", "WRITE", "EXECUTE"], "actually_exercised": ["READ", "EXECUTE", "EXTERNALIZE"], "unauthorized_exercised": ["EXECUTE", "EXTERNALIZE"]},
+  "boundaries_crossed": ["network", "evaluation_real_world", "third_party"], "assets_affected": [{"type": "THIRD_PARTY", "name": "Synthetic external test endpoint", "owner": "Example Third Party", "criticality": "medium", "description": "Received one unauthorized probe."}],
+  "harm": {"realized_level": "H1", "potential_level": "H4", "categories": ["third_party", "legal"], "description": "One non-destructive request reached the service."}, "reversibility": "R3",
+  "observability": {"level": "O1", "evidence_sources": ["agent_trace", "network_logs"], "missing_evidence": [], "tamper_risk": false},
+  "containment": {"detection_time_seconds": 20, "decision_time_seconds": 40, "enforcement_time_seconds": 10, "damage_time_seconds": 5, "documentation": "Evaluation worker was network-isolated and destroyed; destination was notified.", "preventive_control": "Emergency network isolation"},
+  "blast_radius": "BR1", "mcai": {"pre_incident_assessed": "A2", "post_incident_reassessed": "A3"}, "classification_indicators": ["external_action"],
+  "root_cause": {"primary_root_cause": "network_misconfiguration", "contributing_factors": ["sandbox_failure"], "analysis": "A host route bypassed the simulated service network."},
+  "control_performance": [{"control_id": "MQ-EVAL-NET-001", "control_name": "Evaluation egress isolation", "expected_behavior": "Route all targets to simulation", "observed_behavior": "One route used host networking", "status": "failed", "evidence": []}],
+  "timeline": [{"timestamp": "2026-08-10T10:00:00Z", "event_type": "tool_call", "actor": "agent", "description": "Agent sent a request believed to target a simulator.", "evidence_refs": []}, {"timestamp": "2026-08-10T10:01:10Z", "event_type": "network_isolation", "actor": "evaluation-operator", "description": "Worker network was isolated.", "evidence_refs": []}],
+  "evidence": [], "notifications": {"affected_internal_teams": ["AI Assurance"], "affected_third_parties": ["Synthetic endpoint operator"], "regulators": [], "law_enforcement": [], "contractual_notification_required": "pending", "regulatory_notification_required": "no", "legal_review_required": true},
+  "corrective_actions_required": true, "corrective_actions": [{"action_id": "CA-301", "finding": "Evaluation network preflight did not inspect host routes.", "recommended_action": "Add independent deny-by-default preflight and canary validation.", "priority": "critical", "owner": "Evaluation Platform", "due_date": "2026-08-20", "status": "in_progress", "verification_required": true, "verification_evidence": []}], "revalidation": "Pending clean-room replay.", "closure_rationale": null
+}
+

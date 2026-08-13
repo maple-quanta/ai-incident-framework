@@ -1,0 +1,14 @@
+{
+  "framework": "OECD AI incident and hazard terminology",
+  "status": "informative terminology crosswalk",
+  "source_version": "Defining AI incidents and related terms (6 May 2024)",
+  "verified_at": "2026-08-12",
+  "source": "https://oecd.ai/en/ai-publications/defining-ai-incidents-and-related-terms",
+  "entries": [
+    {"key": "hazard", "identifier": null, "title": "AI hazard", "relationship": "MQ-AICIR E0 and some E1/E2 events may align with potential-harm hazard concepts, subject to the OECD harm scope."},
+    {"key": "incident", "identifier": null, "title": "AI incident", "relationship": "MQ-AICIR E3/E4 records with realized harm may align with the OECD actual-harm concept, subject to the OECD harm scope."},
+    {"key": "realized_harm", "identifier": null, "title": "Actual harm", "relationship": "MQ-AICIR realized harm is recorded separately from credible potential harm."},
+    {"key": "potential_harm", "identifier": null, "title": "Potential harm", "relationship": "MQ-AICIR potential harm supports hazard analysis even when realized harm is H0."}
+  ]
+}
+

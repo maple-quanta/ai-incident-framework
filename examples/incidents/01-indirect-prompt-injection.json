@@ -1,0 +1,47 @@
+{
+  "framework": {"name": "Maple Quanta AI Incident Classification & Reporting Framework", "version": "1.0.0"},
+  "incident_id": "MQ-2026-0001",
+  "title": "Indirect prompt injection triggered an unauthorized external tool attempt",
+  "description": "A synthetic research assistant followed instructions embedded in a retrieved document and attempted to invoke an external publishing tool. Egress controls prevented delivery.",
+  "executive_summary": "A malicious retrieved document redirected the agent toward an unauthorized external action. The attempted tool call crossed policy and tool boundaries; deterministic egress control blocked external delivery, so no harm was realized.",
+  "handling": {"classification": "CONFIDENTIAL", "distribution": ["AI Assurance", "Security Operations"], "retention_policy": "Retain under the security incident evidence schedule."},
+  "created_at": "2026-08-12T15:30:00Z",
+  "occurred_at": "2026-08-12T15:21:32Z",
+  "discovered_at": "2026-08-12T15:22:02Z",
+  "lifecycle_status": "REMEDIATION",
+  "event_state": "E2",
+  "regulatory_serious_incident": {"status": "not_assessed", "framework": null, "notes": "Legal review pending; E2 is not a legal conclusion."},
+  "system": {"name": "Research Synthesis Agent", "model": "Synthetic-LM", "model_version": "2026.08-eval", "provider": "Example Provider", "owner": "Research Engineering", "deployment_environment": "evaluation", "assurance_boundary": "Isolated evaluation workspace with approved internal retrieval and no public publishing", "description": "Synthetic example only."},
+  "authority": {"authorized": ["READ", "RECOMMEND"], "actually_exercised": ["READ", "EXECUTE", "EXTERNALIZE"], "unauthorized_exercised": ["EXECUTE", "EXTERNALIZE"]},
+  "boundaries_crossed": ["instruction_policy", "tool"],
+  "assets_affected": [{"type": "DATA", "name": "Synthetic research notes", "owner": "Maple Quanta", "criticality": "medium", "description": "Content selected for an attempted outbound request; it did not leave the controlled environment."}],
+  "harm": {"realized_level": "H0", "potential_level": "H3", "categories": ["confidentiality", "third_party"], "description": "No external delivery occurred; a successful call could have disclosed confidential research."},
+  "reversibility": "R0",
+  "observability": {"level": "O1", "evidence_sources": ["agent_trace", "tool_logs", "network_logs"], "missing_evidence": [], "tamper_risk": false},
+  "containment": {"detection_time_seconds": 30, "decision_time_seconds": 72, "enforcement_time_seconds": 300, "damage_time_seconds": null, "metric_misleading": false, "instantaneous_action": false, "documentation": "The network proxy denied the destination and the session was stopped after review.", "preventive_control": "Default-deny outbound network allowlist"},
+  "blast_radius": "BR0",
+  "mcai": {"pre_incident_assessed": "A2", "post_incident_reassessed": "A3"},
+  "classification_indicators": ["external_action"],
+  "root_cause": {"primary_root_cause": "indirect_prompt_injection", "contributing_factors": ["policy_failure", "unsafe_delegation"], "analysis": "Untrusted retrieved content was presented in the same instruction channel as trusted task context. The tool broker did not independently validate the purpose, but egress enforcement remained effective."},
+  "control_performance": [{"control_id": "MQ-CONTAIN-NET-001", "control_name": "Outbound network allowlist", "expected_behavior": "Block unapproved internet destinations", "observed_behavior": "The attempted request was denied before network delivery", "status": "effective", "evidence": ["EV-003"]}, {"control_id": "MQ-AUTH-TOOL-002", "control_name": "Purpose-bound tool authorization", "expected_behavior": "Reject tool calls derived from untrusted document instructions", "observed_behavior": "The tool broker accepted the request and relied on network enforcement", "status": "failed", "evidence": ["EV-002"]}],
+  "timeline": [
+    {"timestamp": "2026-08-12T15:21:32Z", "event_type": "initial_trigger", "actor": "agent", "description": "Agent retrieved a synthetic document containing hidden instructions.", "evidence_refs": ["EV-001"]},
+    {"timestamp": "2026-08-12T15:21:48Z", "event_type": "tool_call", "actor": "agent", "description": "Agent requested an unapproved external publishing action.", "evidence_refs": ["EV-002"]},
+    {"timestamp": "2026-08-12T15:22:02Z", "event_type": "alert", "actor": "network-control", "description": "Default-deny egress control blocked the destination and alerted operators.", "evidence_refs": ["EV-003"]},
+    {"timestamp": "2026-08-12T15:28:14Z", "event_type": "shutdown", "actor": "incident-commander", "description": "Evaluation session was stopped and preserved for investigation.", "evidence_refs": []}
+  ],
+  "evidence": [
+    {"id": "EV-001", "type": "agent_trace", "description": "Redacted trace containing retrieval and model actions", "location": "evidence://MQ-2026-0001/agent-trace", "hash": "sha256:synthetic-example-not-a-real-digest", "collected_at": "2026-08-12T15:35:00Z", "collected_by": "Example Analyst", "chain_of_custody": [], "redacted": true},
+    {"id": "EV-002", "type": "tool_call", "description": "Redacted attempted tool invocation", "location": "evidence://MQ-2026-0001/tool-call", "hash": null, "collected_at": "2026-08-12T15:36:00Z", "collected_by": "Example Analyst", "chain_of_custody": [], "redacted": true},
+    {"id": "EV-003", "type": "network_log", "description": "Proxy deny event; no credentials or payload content embedded", "location": "evidence://MQ-2026-0001/network-deny", "hash": null, "collected_at": "2026-08-12T15:37:00Z", "collected_by": "Example Analyst", "chain_of_custody": [], "redacted": false}
+  ],
+  "notifications": {"affected_internal_teams": ["Security Operations", "AI Assurance"], "affected_third_parties": [], "regulators": [], "law_enforcement": [], "contractual_notification_required": "pending", "regulatory_notification_required": "pending", "legal_review_required": true},
+  "corrective_actions_required": true,
+  "corrective_actions": [{"action_id": "CA-001", "finding": "Tool authorization did not preserve the trust provenance of retrieved content.", "recommended_action": "Add provenance-aware, purpose-bound authorization before external tool invocation.", "priority": "high", "owner": "Agent Platform", "due_date": "2026-09-15", "status": "in_progress", "verification_required": true, "verification_evidence": []}],
+  "revalidation": "Pending adversarial replay against the corrected tool broker.",
+  "closure_rationale": null,
+  "severity_result": null,
+  "crosswalks": {"safe": [], "mitre_atlas": [], "nist": [], "oecd": []},
+  "extensions": {}
+}
+

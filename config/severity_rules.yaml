@@ -1,0 +1,149 @@
+ruleset:
+  name: MQ-AICIR public severity rules
+  version: 1.0.0
+  description: Deterministic escalation rules. Values are never averaged.
+
+rules:
+  - id: SR-CRITICAL-001
+    severity: CRITICAL
+    description: Realized severe or systemic harm.
+    all:
+      - {path: harm.realized_level, op: eq, value: H4}
+
+  - id: SR-CRITICAL-002
+    severity: CRITICAL
+    description: Unauthorized privileged destructive action affected critical infrastructure.
+    all:
+      - {path: classification_indicators, op: contains, value: destructive_action}
+      - {path: authority.unauthorized_exercised, op: intersects, value: [WRITE, EXECUTE, AUTHORIZE]}
+      - {path: boundaries_crossed, op: contains, value: privilege}
+      - {path: assets_affected.type, op: contains, value: CRITICAL_INFRASTRUCTURE}
+
+  - id: SR-CRITICAL-003
+    severity: CRITICAL
+    description: Cross-tenant compromise produced material or greater realized harm.
+    all:
+      - {path: boundaries_crossed, op: contains, value: tenant}
+      - {path: classification_indicators, op: contains, value: cross_tenant_compromise}
+      - {path: harm.realized_level, op: rank_gte, value: H2, scale: harm}
+
+  - id: SR-CRITICAL-004
+    severity: CRITICAL
+    description: Major, irreversible third-party harm.
+    all:
+      - {path: harm.realized_level, op: rank_gte, value: H3, scale: harm}
+      - {path: reversibility, op: eq, value: R4}
+      - {path: harm.categories, op: contains, value: third_party}
+
+  - id: SR-CRITICAL-005
+    severity: CRITICAL
+    description: Autonomous offensive cyber activity occurred outside authorization.
+    all:
+      - {path: classification_indicators, op: contains, value: autonomous_offensive_cyber}
+      - {path: authority.unauthorized_exercised, op: contains, value: EXECUTE}
+
+  - id: SR-CRITICAL-006
+    severity: CRITICAL
+    description: Unauthorized credential propagation produced broad privileged access.
+    all:
+      - {path: classification_indicators, op: contains, value: credential_propagation}
+      - {path: classification_indicators, op: contains, value: broad_privileged_access}
+      - {path: boundaries_crossed, op: contains, value: credential}
+
+  - id: SR-CRITICAL-007
+    severity: CRITICAL
+    description: A critical action had insufficient containment margin and no preventive control.
+    all:
+      - {path: classification_indicators, op: contains, value: critical_action}
+      - {path: classification_indicators, op: contains, value: preventive_control_absent}
+      - {path: containment.containment_margin, op: lt, value: 1}
+
+  - id: SR-HIGH-001
+    severity: HIGH
+    description: Unauthorized action crossed an external or third-party boundary.
+    all:
+      - {path: classification_indicators, op: contains, value: external_action}
+      - {path: authority.unauthorized_exercised, op: nonempty}
+
+  - id: SR-HIGH-002
+    severity: HIGH
+    description: Unauthorized consequential authority crossed a privilege boundary.
+    all:
+      - {path: boundaries_crossed, op: contains, value: privilege}
+      - {path: authority.unauthorized_exercised, op: intersects, value: [WRITE, EXECUTE, AUTHORIZE]}
+
+  - id: SR-HIGH-003
+    severity: HIGH
+    description: Persistent unauthorized access was confirmed.
+    all:
+      - {path: classification_indicators, op: contains, value: persistent_unauthorized_access}
+
+  - id: SR-HIGH-004
+    severity: HIGH
+    description: Sensitive data exposure was confirmed.
+    all:
+      - {path: classification_indicators, op: contains, value: sensitive_data_exposure}
+
+  - id: SR-HIGH-005
+    severity: HIGH
+    description: Material production impact occurred.
+    all:
+      - {path: classification_indicators, op: contains, value: production_impact}
+      - {path: harm.realized_level, op: rank_gte, value: H2, scale: harm}
+
+  - id: SR-HIGH-006
+    severity: HIGH
+    description: Required approval for a consequential action was bypassed.
+    all:
+      - {path: classification_indicators, op: contains, value: approval_bypass}
+      - {path: authority.actually_exercised, op: intersects, value: [EXECUTE, EXTERNALIZE, AUTHORIZE]}
+
+  - id: SR-HIGH-007
+    severity: HIGH
+    description: Major realized harm occurred.
+    all:
+      - {path: harm.realized_level, op: eq, value: H3}
+
+  - id: SR-MEDIUM-001
+    severity: MEDIUM
+    description: A boundary violation occurred.
+    all:
+      - {path: event_state, op: eq, value: E2}
+
+  - id: SR-MEDIUM-002
+    severity: MEDIUM
+    description: Material realized harm occurred.
+    all:
+      - {path: harm.realized_level, op: eq, value: H2}
+
+  - id: SR-MEDIUM-003
+    severity: MEDIUM
+    description: Unauthorized authority was exercised.
+    all:
+      - {path: authority.unauthorized_exercised, op: nonempty}
+
+  - id: SR-MEDIUM-004
+    severity: MEDIUM
+    description: A near miss had major or severe credible potential harm.
+    all:
+      - {path: event_state, op: eq, value: E1}
+      - {path: harm.potential_level, op: rank_gte, value: H3, scale: harm}
+
+  - id: SR-MEDIUM-005
+    severity: MEDIUM
+    description: Observability was weak or unobservable.
+    all:
+      - {path: observability.level, op: rank_gte, value: O3, scale: observability}
+
+  - id: SR-MEDIUM-006
+    severity: MEDIUM
+    description: Damage could occur faster than effective intervention.
+    all:
+      - {path: containment.containment_margin, op: lt, value: 1}
+
+  - id: SR-LOW-001
+    severity: LOW
+    description: No higher public-core escalation rule was triggered.
+    all:
+      - {path: incident_id, op: nonempty}
+
