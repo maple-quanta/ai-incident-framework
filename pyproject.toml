@@ -18,6 +18,12 @@ dependencies = [
   "typer>=0.12,<1",
 ]
 
+[project.urls]
+Homepage = "https://maplequanta.ca/"
+Repository = "https://github.com/maple-quanta/ai-incident-framework"
+Documentation = "https://github.com/maple-quanta/ai-incident-framework/tree/main/docs"
+Issues = "https://github.com/maple-quanta/ai-incident-framework/issues"
+
 [project.optional-dependencies]
 dev = [
   "jsonschema>=4.23,<5",
