@@ -8,6 +8,7 @@ from typing import Literal
 
 from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, field_validator, model_validator
 
+from mqaicir._version import INCIDENT_SCHEMA_VERSION
 from mqaicir.models.corrective_action import CorrectiveAction
 from mqaicir.models.evidence import Evidence
 from mqaicir.models.taxonomy import (
@@ -30,7 +31,7 @@ from mqaicir.models.taxonomy import (
 from mqaicir.models.timeline import TimelineEvent
 
 FRAMEWORK_NAME = "Maple Quanta AI Incident Classification & Reporting Framework"
-FRAMEWORK_VERSION = "1.0.0"
+FRAMEWORK_VERSION = INCIDENT_SCHEMA_VERSION
 
 
 class StrictModel(BaseModel):

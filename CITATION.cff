@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this framework, please cite it using the following metadata."
+title: "Maple Quanta AI Incident Classification & Reporting Framework"
+version: 1.0.1
+date-released: 2026-08-18
+license: "Apache-2.0"
+type: software
+abstract: "An auditable, machine-readable and human-readable framework for classifying and reporting agentic AI hazards, near misses, boundary violations, and incidents."
+
+authors:
+  - given-names: "Qasem"
+    family-names: "Exirifard"
+    affiliation: "Maple Quanta Inc."
+    orcid: "https://orcid.org/0000-0002-4764-8491"
+
+repository-code: "https://github.com/maple-quanta/ai-incident-framework"
+url: "https://github.com/maple-quanta/ai-incident-framework"
+
+keywords:
+  - artificial intelligence
+  - AI incident reporting
+  - agentic AI
+  - AI assurance
+  - AI governance
+  - AI safety

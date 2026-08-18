@@ -7,6 +7,12 @@ from mqaicir.cli import app
 runner = CliRunner()
 
 
+def test_version_reports_software_release() -> None:
+    result = runner.invoke(app, ["--version"])
+    assert result.exit_code == 0
+    assert result.stdout.strip() == "mq-aicir 1.0.1"
+
+
 def test_validate_command(example_path: Path) -> None:
     result = runner.invoke(app, ["validate", str(example_path)])
     assert result.exit_code == 0
@@ -35,4 +41,3 @@ def test_new_and_report_commands(tmp_path: Path) -> None:
     generated = runner.invoke(app, ["report", str(incident), "--format", "html", "--output", str(report)])
     assert generated.exit_code == 0
     assert report.read_text().startswith("<!doctype html>")
-

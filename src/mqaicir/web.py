@@ -13,6 +13,7 @@ from urllib.parse import parse_qs, quote, unquote, urlparse
 
 from pydantic import ValidationError
 
+from mqaicir._version import SOFTWARE_VERSION
 from mqaicir.classification.severity import classify_severity
 from mqaicir.io import MAX_INCIDENT_BYTES, load_incident, save_incident
 from mqaicir.models.incident import Incident
@@ -279,7 +280,7 @@ def apply_form(repository: IncidentRepository, form: dict[str, list[str]]) -> In
 
 def handler_factory(repository: IncidentRepository) -> type[BaseHTTPRequestHandler]:
     class Handler(BaseHTTPRequestHandler):
-        server_version = "MQ-AICIR/1.0"
+        server_version = f"MQ-AICIR/{SOFTWARE_VERSION}"
 
         def log_message(self, fmt: str, *args: object) -> None:
             # Avoid logging request paths or values: incident identifiers can be sensitive.

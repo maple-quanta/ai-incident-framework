@@ -10,6 +10,7 @@ from typing import Annotated
 import typer
 from pydantic import ValidationError
 
+from mqaicir._version import SOFTWARE_VERSION
 from mqaicir.classification.lifecycle import transition_incident
 from mqaicir.classification.severity import classify_severity
 from mqaicir.io import atomic_write, load_incident, save_incident, validated_output_path
@@ -25,9 +26,30 @@ from mqaicir.scaffold import new_incident
 
 app = typer.Typer(
     name="mq-aicir",
-    help="Maple Quanta AI Incident Classification & Reporting Framework (MQ-AICIR) 1.0.0",
+    help=f"Maple Quanta AI Incident Classification & Reporting Framework (MQ-AICIR) {SOFTWARE_VERSION}",
     no_args_is_help=True,
 )
+
+
+def _version_callback(value: bool) -> None:
+    if value:
+        typer.echo(f"mq-aicir {SOFTWARE_VERSION}")
+        raise typer.Exit()
+
+
+@app.callback()
+def main(
+    version: Annotated[
+        bool,
+        typer.Option(
+            "--version",
+            callback=_version_callback,
+            is_eager=True,
+            help="Show the software version and exit.",
+        ),
+    ] = False,
+) -> None:
+    """Maple Quanta AI Incident Classification & Reporting Framework."""
 
 
 def _fail(message: str, code: int = 1) -> None:

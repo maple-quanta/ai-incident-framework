@@ -1,6 +1,6 @@
 # Maple Quanta AI Incident Classification & Reporting Framework
 
-MQ-AICIR 1.0.0 is a typed, auditable framework for recording hazards, near misses, boundary violations, and incidents involving agentic AI systems. It complements Maple Quanta's Agentic AI Containment Assurance methodology.
+MQ-AICIR software release 1.0.1 is a typed, auditable framework for recording hazards, near misses, boundary violations, and incidents involving agentic AI systems. It complements Maple Quanta's Agentic AI Containment Assurance methodology.
 
 Developed and maintained by [Maple Quanta Inc.](https://maplequanta.ca/), an independent Canadian AI, data science, and quantum technology advisory firm.
 
@@ -119,7 +119,11 @@ Incident records may contain highly sensitive security, personal, contractual, a
 
 ## Compatibility and versioning
 
-Every record declares the framework name and semantic version. MQ-AICIR 1.0 rejects records claiming another framework version instead of silently reinterpreting them. Future migrations belong in `mqaicir.migrations` and must produce a new validated record with an auditable migration note. See `docs/implementation-guide.md`.
+The software release version and incident-record compatibility version are separate. Software release 1.0.1 continues to read and write MQ-AICIR 1.0 records whose `framework.version` is `1.0.0`, using the unchanged `schemas/ai-incident-1.0.schema.json`. MQ-AICIR 1.0 rejects records claiming another framework version instead of silently reinterpreting them. Future migrations belong in `mqaicir.migrations` and must produce a new validated record with an auditable migration note. See `docs/implementation-guide.md`.
+
+## Citation
+
+Citation metadata for this release is available in [`CITATION.cff`](CITATION.cff). It records the author, affiliation, ORCID, licence, repository, release version, and release date in Citation File Format 1.2.
 
 ## License
 

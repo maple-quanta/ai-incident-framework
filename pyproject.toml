@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "mq-aicir"
-version = "1.0.0"
+version = "1.0.1"
 description = "Maple Quanta AI Incident Classification & Reporting Framework"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -40,6 +40,7 @@ packages = ["src/mqaicir"]
 [tool.hatch.build.targets.wheel.force-include]
 "config/severity_rules.yaml" = "mqaicir/data/severity_rules.yaml"
 "config/crosswalks" = "mqaicir/data/crosswalks"
+"schemas/ai-incident-1.0.schema.json" = "mqaicir/data/ai-incident-1.0.schema.json"
 
 [tool.pytest.ini_options]
 addopts = "-q"
