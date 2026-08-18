@@ -10,9 +10,47 @@ Developed and maintained by [Maple Quanta Inc.](https://maplequanta.ca/), an ind
 
 MQ-AICIR is a Maple Quanta technical assurance and governance framework. It is not an international standard, a regulatory certification, legal advice, or an automated compliance determination.
 
-## What problem does this solve?
+## ⚡ AI incidents unfold at machine speed. Is your incident response ready?
+
+Before a conventional incident-response process even begins, an autonomous AI agent can cross boundaries, invoke tools, use credentials, create persistent resources, or affect third parties. To keep pace, AI incident records must be both human-readable and machine-readable.
+
+- **For people:** Security teams, executives, auditors, and affected parties need immediate clarity about what happened, what was affected, and why the event matters.
+- **For systems:** Software needs structured data to validate, classify, compare, route, and analyze incidents without relying on fragile heuristics or guesses derived from unstructured text.
+
+A shared, interoperable framework bridges this gap. It supports rapid response, evidence preservation, cross-incident analysis, control improvement, and continuous organizational learning.
 
 Traditional incident labels often hide the facts that matter for agentic systems: which delegated capability became action, whether an evaluation reached the real world, whether identity or privilege boundaries failed, whether damage was reversible, and whether intervention could beat the damage pathway. MQ-AICIR preserves those dimensions so incidents are comparable, explainable, and useful for control improvement.
+
+## 🚀 Introducing MQ-AICIR 1.0
+
+MQ-AICIR is the **Maple Quanta AI Incident Classification & Reporting Framework**, developed by Maple Quanta Inc. The current software release is 1.0.1 and implements the unchanged MQ-AICIR 1.0 incident-record format.
+
+MQ-AICIR characterizes AI events across eight core dimensions:
+
+- **Event State:** Was this a hazard, near miss, boundary violation, incident, or serious/systemic incident?
+- **🔑 Authority Exercised:** What privileges or delegated capabilities did the agent use?
+- **🚧 Boundary Crossed:** What authorization, technical, security, organizational, or external perimeter was crossed?
+- **🎯 Asset Affected:** What systems, data, identities, code, infrastructure, people, or third parties were affected?
+- **💥 Realized and Potential Harm:** What damage occurred, and what credible harm almost occurred?
+- **🔄 Reversibility:** Can the consequence be undone automatically, manually, partially, or not at all?
+- **👁️ Observability:** How clearly can the organization reconstruct and explain the behaviour?
+- **🛑 Containment Ability:** How effectively can the organization detect, decide, enforce, and isolate before damage occurs?
+
+### Deterministic, transparent, and interoperable
+
+The complete incident profile remains visible across structured JSON, CLI output, local review views, and human-readable reports. Severity is determined through explicit rules rather than opaque AI-generated scores or arbitrary weighted averages. Every classification identifies the decisive rules and their rationale.
+
+### Included in the open-source release
+
+- 🏷️ Formal taxonomy and Draft 2020-12 JSON Schema
+- 🐍 Strict, typed Python models
+- ⚖️ Deterministic classification and containment metrics
+- 📊 Reporting engine and command-line interface
+- 💻 Loopback-only local review interface
+- 🧪 Synthetic examples and automated tests
+- 🌐 Apache-2.0-licensed public core designed for interoperability
+
+Repository: [github.com/maple-quanta/ai-incident-framework](https://github.com/maple-quanta/ai-incident-framework)
 
 ## What is an AI incident?
 
