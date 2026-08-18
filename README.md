@@ -1,5 +1,7 @@
 # Maple Quanta AI Incident Classification & Reporting Framework
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21988462.svg)](https://doi.org/10.5281/zenodo.21988462)
+
 MQ-AICIR software release 1.0.1 is a typed, auditable framework for recording hazards, near misses, boundary violations, and incidents involving agentic AI systems. It complements Maple Quanta's Agentic AI Containment Assurance methodology.
 
 Developed and maintained by [Maple Quanta Inc.](https://maplequanta.ca/), an independent Canadian AI, data science, and quantum technology advisory firm.
